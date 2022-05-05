@@ -1,0 +1,90 @@
+ th, td {
+    border: 2px solid black;
+    padding:8px;
+    font-family: verdana;
+ }
+
+ th {
+     background-color:lightskyblue;
+ }
+
+ td {
+     background-color: lightgray;
+ }
+
+.DashboardHeader{
+    position: absolute;
+    text-align: center;
+    font-size: large;
+    font-family:verdana;
+    color: white;
+    background-color: black;
+    display:block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 130px;
+}
+
+.CardStats{
+    position: relative;
+    text-align: center;
+    border-style: none;
+    border-width: 1px;
+    display:inline-block;
+    width: 33%;
+    margin: auto;
+    top: 120px;
+    height: 150px;
+}
+
+#TomorrowData, #TodayData{
+    position: relative;
+    text-align: center;
+    width: 80%;
+    height: 80%;
+    margin:auto;
+    padding-top: 20px;
+}
+
+#YesterdayData {
+    position: relative;
+    text-align: center;
+    width: 80%;
+    height: 80%;
+    margin:auto;
+    padding-top: 10px;
+}
+
+.PricePredictionChart{
+    position: relative;
+    text-align: center;
+    border-style: none;
+    border-width: 1px;
+    display:inline-block;
+    width: 55%;
+    top: 150px;
+    height: 480px;
+}
+
+.TwitterData{
+    position: relative;
+    text-align: center;
+    border-style: none;
+    border-width: 1px;
+    display:inline-block;
+    vertical-align:top;
+    top: 150px;
+    width: 44%;
+    height: 480px;
+}
+
+.LiveTweets{
+    position: relative;
+    text-align: center;
+    border-style: solid;
+    border-width: 1px;
+    vertical-align:top;
+    width: 100%;
+    height: 480px;
+}

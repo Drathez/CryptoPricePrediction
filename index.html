@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    
+    <link rel="stylesheet" href="styles.css">
+    <title> Crypto Price Prediction Dashboard </title>
+</head>
+
+<body>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+
+    <script>
+        var ccData;
+            $.ajax({
+            type: "GET",  
+            url: "PythonData/CryptoPPData.csv",
+            dataType: "text",    
+            async: false,   
+            success: function(response)  
+            {
+                ccData = $.csv.toArrays(response);
+                console.log("ccData ", ccData)
+            }   
+            });
+        
+        // Remove table header
+        ccData.shift()
+
+        function getFormattedDate1(dt){
+            var formatDt
+            if(dt.getDate()<10){
+                formatDt = "0" + dt.getDate() + "/" + (dt.getMonth()+1) + "/" + dt.getFullYear();
+            } else {
+                formatDt = dt.getDate() + "/" + (dt.getMonth()+1) + "/" + dt.getFullYear();
+            }
+            return formatDt;
+        }
+
+        function getFormattedDate2(dt){
+            var formatDt
+            if(dt.getDate()<10){
+                formatDt = dt.getFullYear() + "-" + (dt.getMonth()+1) + "-0" + dt.getDate();
+            } else {
+                formatDt = dt.getFullYear() + "-" + (dt.getMonth()+1) + "-" + dt.getDate();
+            }
+            return formatDt;
+        }
+
+        function getTodayIndex(){
+            for(var i=0; i<ccData.length; i++){
+                if (ccData[i][0] == todayDt1 || ccData[i][0] == todayDt2){
+                    var value = i;
+                }
+            }
+            return value;
+        }
+
+        var todayDt1 = getFormattedDate1(new Date(Date.now()));  
+        var todayDt2 = getFormattedDate2(new Date(Date.now()));
+
+        index = getTodayIndex();
+        
+        var todayDate = todayDt1
+        var BTCActualPrice = ccData[index][1]
+        var BTCPredictedToday = ccData[index][2]
+        var BTCPredictedTomorrow = ccData[index][3]
+
+        if (ccData.length>1) {
+        var BTCActualPriceYesterday = ccData[index-1][1]
+        var BTCPredictedYesterday = ccData[index-1][2]
+        var PredictionAccuracy = ccData[index-1][4] // for Yesterday
+        }
+    </script>
+
+
+<div class="DashboardHeader">
+    <h1>Crypto Price Prediction <br/>
+        (<span id="todayDate" style="font-weight: bold;"></span>)
+    </h1>
+</div>
+
+<div class="CardStats"> 
+    <table id="TomorrowData">
+        <tr>
+            <th  style="height:50px"> Predicted Closing Price (Tomorrow) </th>
+        </tr>
+        <tr>
+            <td id="BTCPredictedTomorrow" style="font-size:22px; font-weight:bold">  </td>
+        </tr>
+    </table>
+</div>
+
+<div class="CardStats"> 
+    <table id="TodayData"> 
+        <tr>
+            <th  style="height:50px"> Predicted Closing Price (Today) </th>
+        </tr>
+        <tr>
+            <td id="BTCPredictedToday" style="font-size:22px; font-weight:bold"> </td>
+        </tr>
+    </table> 
+</div>
+<div class="CardStats"> 
+    <table id="YesterdayData"> 
+        <tr>
+            <th style="height:23px" colspan="3"> Predicted Closing Price (Yesterday) </th>
+        </tr>
+        <tr>
+            <td style="height:23px"> Actual Price </td>
+            <td style="height:23px"> Prediction Accuracy </td>
+            <td style="height:23px"> Predicted Price </td>
+        </tr>
+        <tr>
+            <td id="BTCActualPriceYesterday" style="font-size:18px; font-weight:bold"> </td>
+            <td id="PredictionAccuracy" style="font-size:18px; font-weight:bold"> </td>
+            <td id="BTCPredictedYesterday" style="font-size:18px; font-weight:bold"> </td>
+        </tr>
+    </table> 
+</div>
+
+<div class="PricePredictionChart">
+    <img src="PythonData/BTCPP.png" alt="Bitcoin Price Prediction Chart" width="850" height="470">
+</div>
+
+<div class="TwitterData">
+    <!-- <div class="PolarityStats"></div>  -->
+    <div class="LiveTweets">
+        <a class="twitter-timeline" 
+        href="https://twitter.com/Bitcoin?ref_src=twsrc%5Etfw"
+        data-lang="en"
+        data-dnt="true"
+        data-height="480"
+        data-chrome="nofooter"
+        data-border-color="#a80000"
+        data-aria-polite="assertive"
+        >Tweets by Bitcoin</a> 
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+</div>
+
+<script>
+    document.getElementById("BTCPredictedTomorrow").innerHTML = "$"+BTCPredictedTomorrow;
+    document.getElementById("BTCPredictedToday").innerHTML = "$"+BTCPredictedToday;
+    document.getElementById("todayDate").innerHTML = todayDate;
+
+    if(BTCActualPriceYesterday == null){
+    document.getElementById("BTCActualPriceYesterday").innerHTML = "-";
+    document.getElementById("PredictionAccuracy").innerHTML = "-";
+    document.getElementById("BTCPredictedYesterday").innerHTML = "-";
+    } else {
+    document.getElementById("BTCActualPriceYesterday").innerHTML = "$"+BTCActualPriceYesterday;
+    document.getElementById("PredictionAccuracy").innerHTML = PredictionAccuracy + "%";
+    document.getElementById("BTCPredictedYesterday").innerHTML = "$"+BTCPredictedYesterday;
+    }
+</script>
+</body>

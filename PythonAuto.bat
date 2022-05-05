@@ -1,0 +1,1 @@
+C:\Users\husai\anaconda3\envs\new_env\python.exe "C:/CryptoPPProject/Project_Crypto_PP.py"
