@@ -158,10 +158,10 @@ from textblob import TextBlob
 def clean_tweet(tweet):
     return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
 
-consumer_key = 'nsuF3PBmOUBieXoOZsos9PyLD'
-consumer_secret = 'qKYnrKfDv7pvmhiTL3cHZZG21hize0dWS7rwHuK54ymgKlbnxu'
-access_token = '488340540-WHeSkGpgZzh43WxkBwHTvN1cJY8kgZfDSmHqxZmN'
-access_token_secret = 'h2Z08eYhKqNZ5R7mhg72SE8BIreAKvZdPnrgHLFGfh3yj'
+consumer_key = #your consumer key
+consumer_secret = #your consumer secret key
+access_token = #your access token
+access_token_secret = #your access secret token
 
 auth_handler = tweepy.OAuthHandler(consumer_key = consumer_key, consumer_secret = consumer_secret)
 auth_handler.set_access_token(access_token, access_token_secret)
